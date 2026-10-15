@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -63,13 +62,13 @@ fun RedactaScreen(
     onTarea: (Tarea) -> Unit,
     onRedactar: () -> Unit,
     onDetener: () -> Unit,
-    onUsar: (String) -> Unit
+    onUsar: (String) -> Unit,
 ) {
     val e = RedactaTema.espaciado
     IconosClarosEnLaBarraDeEstado()
     Scaffold(
         topBar = { Encabezado(estado.modelo) },
-        bottomBar = { BarraRedactar(estado, onRedactar, onDetener) }
+        bottomBar = { BarraRedactar(estado, onRedactar, onDetener) },
     ) { relleno ->
         Column(
             modifier = Modifier
@@ -77,7 +76,7 @@ fun RedactaScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = e.lg, vertical = e.lg),
-            verticalArrangement = Arrangement.spacedBy(e.lg)
+            verticalArrangement = Arrangement.spacedBy(e.lg),
         ) {
             Seccion("Tu texto")
             CampoTexto(estado.texto, onTexto, habilitado = !estado.generando)
@@ -117,16 +116,16 @@ private fun Encabezado(modelo: EstadoModelo) {
             .fillMaxWidth()
             .background(
                 Brush.linearGradient(listOf(c.primary, c.onPrimaryContainer)),
-                RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp)
+                RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp),
             )
             .statusBarsPadding()
-            .padding(start = e.xl, end = e.lg, top = e.md, bottom = e.lg)
+            .padding(start = e.xl, end = e.lg, top = e.md, bottom = e.lg),
     ) {
         Text("Redacta", style = MaterialTheme.typography.headlineLarge, color = c.onPrimary)
         Text(
             "Tu texto, mejor escrito. El modelo vive en tu teléfono.",
             style = MaterialTheme.typography.bodyMedium,
-            color = c.onPrimary.copy(alpha = 0.85f)
+            color = c.onPrimary.copy(alpha = 0.85f),
         )
         Spacer(Modifier.height(e.md))
         Row(horizontalArrangement = Arrangement.spacedBy(e.sm)) {
@@ -163,8 +162,8 @@ private fun CampoTexto(texto: String, onTexto: (String) -> Unit, habilitado: Boo
             disabledIndicatorColor = Color.Transparent,
             focusedContainerColor = c.surfaceContainerHighest,
             unfocusedContainerColor = c.surfaceContainerHighest,
-            disabledContainerColor = c.surfaceContainerHigh
-        )
+            disabledContainerColor = c.surfaceContainerHigh,
+        ),
     )
 }
 
@@ -178,14 +177,14 @@ private fun BarraRedactar(estado: RedactaUiState, onRedactar: () -> Unit, onDete
             Modifier
                 .navigationBarsPadding()
                 .imePadding()
-                .padding(horizontal = e.lg, vertical = e.md)
+                .padding(horizontal = e.lg, vertical = e.md),
         ) {
             if (estado.generando) {
                 Button(
                     onClick = onDetener,
                     modifier = Modifier.fillMaxWidth().height(56.dp),
                     shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(containerColor = c.errorContainer, contentColor = c.onErrorContainer)
+                    colors = ButtonDefaults.buttonColors(containerColor = c.errorContainer, contentColor = c.onErrorContainer),
                 ) {
                     Icon(painterResource(R.drawable.ic_detener), contentDescription = null)
                     Spacer(Modifier.width(e.sm))
@@ -196,7 +195,7 @@ private fun BarraRedactar(estado: RedactaUiState, onRedactar: () -> Unit, onDete
                     onClick = onRedactar,
                     enabled = estado.puedeRedactar,
                     modifier = Modifier.fillMaxWidth().height(56.dp),
-                    shape = CircleShape
+                    shape = CircleShape,
                 ) {
                     Icon(painterResource(R.drawable.ic_chispa), contentDescription = null)
                     Spacer(Modifier.width(e.sm))
@@ -209,7 +208,7 @@ private fun BarraRedactar(estado: RedactaUiState, onRedactar: () -> Unit, onDete
                     style = MaterialTheme.typography.bodySmall,
                     color = c.onSurfaceVariant,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth().padding(top = e.sm)
+                    modifier = Modifier.fillMaxWidth().padding(top = e.sm),
                 )
             }
         }
@@ -225,15 +224,18 @@ private fun RedactaPreview() {
                 modelo = EstadoModelo.Listo,
                 texto = EJEMPLOS.first().second,
                 respuesta = Respuesta(
-                    Tarea.Amable,
+                    tarea = Tarea.Amable,
                     texto = "Mañana no habrá clase. Si les quedó alguna duda, pueden repasar en casa: el lunes tendremos examen.",
                     generando = true,
                     tokens = 24,
-                    tokensPorSegundo = 13.5
-                )
+                    tokensPorSegundo = 13.5,
+                ),
             ),
-            onTexto = {}, onTarea = {}, onRedactar = {}, onDetener = {}, onUsar = {}
-        )
+            onTexto = {},
+            onTarea = {},
+            onRedactar = {},
+            onDetener = {},
+        ) {}
     }
 }
 
@@ -247,15 +249,18 @@ private fun OpcionesPreview() {
                 texto = EJEMPLOS.last().second,
                 tarea = Tarea.Responder,
                 respuesta = Respuesta(
-                    Tarea.Responder,
+                    tarea = Tarea.Responder,
                     texto = "1. ¡Sí vamos!\n2. No puedo, lo siento.\n3. Te confirmo el jueves.",
                     generando = false,
                     tokens = 30,
                     tokensPorSegundo = 12.8,
-                    opciones = listOf("¡Sí vamos!", "No puedo, lo siento.", "Te confirmo el jueves.")
-                )
+                    opciones = listOf("¡Sí vamos!", "No puedo, lo siento.", "Te confirmo el jueves."),
+                ),
             ),
-            onTexto = {}, onTarea = {}, onRedactar = {}, onDetener = {}, onUsar = {}
-        )
+            onTexto = {},
+            onTarea = {},
+            onRedactar = {},
+            onDetener = {},
+        ) {}
     }
 }

@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.litertlm.android)
 
     // Hilt (Práctica 9): la librería, el generador de código, y su pieza para ViewModel
     implementation(libs.hilt.android)

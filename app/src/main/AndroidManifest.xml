@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="mx.tec.redacta">
 
     <!--
       Sin permiso de INTERNET: Redacta no lo necesita. Lo que escribes no sale del
       teléfono, y el sistema lo garantiza, no solo la promesa de la app.
     -->
     <application
-        android:name=".RedactaApplication"
+        android:name="mx.tec.redacta.RedactaApplication"
         android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="Redacta"
         android:supportsRtl="true"
         android:theme="@style/Theme.Redacta">
         <activity
-            android:name=".MainActivity"
+            android:name="mx.tec.redacta.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

@@ -54,11 +54,11 @@ fun SinModeloScreen(estado: EstadoModelo, onBuscar: () -> Unit) {
     val e = RedactaTema.espaciado
     val (titulo, explicacion) = when (estado) {
         is EstadoModelo.Error ->
-            "El modelo no cargó" to "Encontré el archivo, pero no se pudo cargar. Si no pesa 584 MB, " +
-                "la descarga quedó incompleta. Cópialo otra vez, desde la carpeta donde lo descargaste:"
+            ("El modelo no cargó" to ("Encontré el archivo, pero no se pudo cargar. Si no pesa 584 MB, " +
+                "la descarga quedó incompleta. Cópialo otra vez, desde la carpeta donde lo descargaste:"))
         else ->
-            "Falta el modelo" to "Redacta no trae a Gemma adentro: pesa 584 MB. " +
-                "Cópialo a la app desde la terminal, en la carpeta donde lo descargaste:"
+            ("Falta el modelo" to ("Redacta no trae a Gemma adentro: pesa 584 MB. " +
+                "Cópialo a la app desde la terminal, en la carpeta donde lo descargaste:"))
     }
     val portapapeles = LocalClipboard.current
     val alcance = rememberCoroutineScope()
@@ -70,7 +70,7 @@ fun SinModeloScreen(estado: EstadoModelo, onBuscar: () -> Unit) {
                 .verticalScroll(rememberScrollState())
                 .padding(e.xxl),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             Box(Modifier.size(104.dp).background(c.tertiaryContainer, CircleShape), contentAlignment = Alignment.Center) {
                 Icon(painterResource(R.drawable.ic_descarga), contentDescription = null, tint = c.onTertiaryContainer, modifier = Modifier.size(52.dp))
@@ -83,9 +83,11 @@ fun SinModeloScreen(estado: EstadoModelo, onBuscar: () -> Unit) {
             Surface(shape = MaterialTheme.shapes.large, color = c.surfaceContainerHighest, modifier = Modifier.fillMaxWidth()) {
                 Row(Modifier.padding(start = e.lg, top = e.sm, bottom = e.sm, end = e.xs), verticalAlignment = Alignment.CenterVertically) {
                     Text(COMANDO_ADB, style = MaterialTheme.typography.bodySmall, fontFamily = FontFamily.Monospace, modifier = Modifier.weight(1f))
-                    IconButton(onClick = {
-                        alcance.launch { portapapeles.setClipEntry(ClipData.newPlainText("Comando", COMANDO_ADB).toClipEntry()) }
-                    }) {
+                    IconButton(
+                        onClick = {
+                            alcance.launch { portapapeles.setClipEntry(ClipData.newPlainText("Comando", COMANDO_ADB).toClipEntry()) }
+                        },
+                    ) {
                         Icon(painterResource(R.drawable.ic_copiar), contentDescription = "Copiar el comando")
                     }
                 }
@@ -98,7 +100,7 @@ fun SinModeloScreen(estado: EstadoModelo, onBuscar: () -> Unit) {
                     fontFamily = FontFamily.Monospace,
                     color = c.onSurfaceVariant,
                     maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
             if (estado is EstadoModelo.Falta) {
@@ -107,7 +109,7 @@ fun SinModeloScreen(estado: EstadoModelo, onBuscar: () -> Unit) {
                     "La app lo busca en ${estado.ruta}",
                     style = MaterialTheme.typography.bodySmall,
                     color = c.onSurfaceVariant,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
             }
             Spacer(Modifier.height(e.xl))
@@ -124,7 +126,6 @@ private fun SinModeloPreview() {
     RedactaTheme {
         SinModeloScreen(
             EstadoModelo.Falta("/storage/emulated/0/Android/data/mx.tec.redacta/files/gemma3-1b-it-int4.litertlm"),
-            onBuscar = {}
-        )
+        ) {}
     }
 }

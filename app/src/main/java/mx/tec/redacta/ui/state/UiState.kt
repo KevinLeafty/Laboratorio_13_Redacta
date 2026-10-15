@@ -9,12 +9,12 @@ data class RedactaUiState(
     val texto: String = "",
     val tarea: Tarea = Tarea.Amable,
     /** La última respuesta. null = todavía no le has pedido nada. */
-    val respuesta: Respuesta? = null
+    val respuesta: Respuesta? = null,
 ) {
     val generando: Boolean get() = respuesta?.generando == true
 
     val puedeRedactar: Boolean
-        get() = modelo == EstadoModelo.Listo && texto.isNotBlank() && !generando
+        get() = (modelo == EstadoModelo.Listo) && texto.isNotBlank() && !generando
 }
 
 /** Una respuesta del modelo, mientras llega y cuando ya llegó. */
@@ -27,7 +27,7 @@ data class Respuesta(
     val tokensPorSegundo: Double? = null,
     /** Para «3 respuestas»: cada una por separado, cuando ya terminó. */
     val opciones: List<String> = emptyList(),
-    val error: String? = null
+    val error: String? = null,
 ) {
     /** Ya se pidió, pero el primer token no llega: el modelo está leyendo tu texto. */
     val leyendo: Boolean get() = generando && texto.isEmpty()

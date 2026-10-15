@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                         onTarea = viewModel::elegirTarea,
                         onRedactar = viewModel::redactar,
                         onDetener = viewModel::detener,
-                        onUsar = viewModel::usarRespuesta
+                        onUsar = viewModel::usarRespuesta,
                     )
                 }
             }
