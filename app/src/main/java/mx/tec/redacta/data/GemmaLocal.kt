@@ -25,6 +25,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import mx.tec.redacta.domain.EstadoModelo
 import mx.tec.redacta.domain.Pedido
+import com.google.ai.edge.litertlm.SamplerConfig
 
 /**
  * Gemma 3 1B, con LiteRT-LM, en el CPU del teléfono.
@@ -76,6 +77,9 @@ class GemmaLocal @Inject constructor(
         val motor = checkNotNull(motor) { "El modelo todavía no está cargado" }
         val config = ConversationConfig(
             systemInstruction = pedido.instruccion?.let { Contents.of(it) },
+            // El ejemplo entra como si fuera una pregunta que el modelo ya contestó.
+            initialMessages = pedido.ejemplo?.let { listOf(Message.user(it.pregunta), Message.model(it.respuesta)) }.orEmpty(),
+            samplerConfig = pedido.temperatura?.let { SamplerConfig(topK = 40, topP = 0.95, temperature = it) },
             maxOutputToken = MAX_TOKENS
         )
         // Una conversación por pedido: sin historia, cada texto se trata solo.
